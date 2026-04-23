@@ -23,6 +23,13 @@ defmodule Asana.Api do
     |> manage_request()
   end
 
+  def request(:put, url, params, body) do
+    url
+    |> merge_query_params(params)
+    |> put(body, opts: [path_params: params])
+    |> manage_request()
+  end
+
   defp manage_request(req) do
     case req do
       {:ok, %Tesla.Env{status: status, body: body}} when status in [200, 201] ->
